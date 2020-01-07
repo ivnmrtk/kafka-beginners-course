@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Properties;
+import java.util.concurrent.ExecutionException;
 
 public class ProducerDemoWithCallback {
 
@@ -26,14 +27,14 @@ public class ProducerDemoWithCallback {
 
         //create producer
 
-        KafkaProducer producer = new KafkaProducer<String, String>(properties);
+        KafkaProducer<String, String> producer = new KafkaProducer<>(properties);
 
 
         for (int i = 0; i < 10; i++) {
 
             //create producer record
 
-            ProducerRecord record = new ProducerRecord<String, String>("first_topic", "hello world " + i);
+            ProducerRecord <String, String> record = new ProducerRecord<>("first_topic", "hello world " + i);
 
             //send data (async)
             producer.send(record, (metadata,exception )  -> {
